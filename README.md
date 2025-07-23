@@ -1,23 +1,32 @@
 # SwordRPC - A Discord Rich Presence Library for Swift
 
-[![Swift Version](https://img.shields.io/badge/Swift-4.0-orange.svg?style=flat-square)](https://swift.org) [![Tag](https://img.shields.io/github/tag/Azoy/SwordRPC.svg?style=flat-square&label=release&colorB=)](https://github.com/Azoy/SwordRPC/releases)
+[![Swift Version](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat-square)](https://swift.org)
+[![Tag](https://img.shields.io/github/tag/sjalkote/SwordRPC.svg?style=flat-square&label=release)](https://github.com/sjalkote/SwordRPC/releases)
+
+This fork provides a more up-to-date and maintained version of the SwordRPC library, which allows you to **integrate Discord Rich Presence into your Swift apps**.
+The code has been heavily documented and the package has been updated with new features and fixes, hopefully making it somewhat more enjoyable to use.
+
+Some of the changes so far include:
+
+- Source updated for Swift 5.0 or higher, support for Swift Package Manager, and updated the Socket dependency.
+- Extensive documentation with DocC & reformatted source code (**In progress**)
+- Timestamp `Double` -> `Int` auto conversion that integrates nicely with any existing usages out of the box.
+- uhhh more stuff in progress
+
+> [!TIP]
+> Open an issue or PR if you have any suggestions/contributions/bugs.
 
 ## Requirements
-1. macOS, Linux
-2. Swift 4.0
+1. macOS or Linux
+2. Swift 5.0 or greater
 
-## Adding SwordRP
-### CocoaPods
-Edit your Podfile to add this dependency:
+## Adding SwordRPC
 
-```ruby
-platform :osx, '10.11'
+### Swift Package Manager
 
-target 'yourappnamehere' do
-  use_frameworks!
-  pod 'SwordRPC'
-end
-```
+1. In your Xcode project, go to **File > Add Package Dependencies...**
+2. Enter the repo URL `https://github.com/sjalkote/SwordRPC.git` and press the button to add it
+3. Yeah that's it lol
 
 ## Example
 ### Callbacks
