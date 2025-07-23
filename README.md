@@ -12,6 +12,9 @@ Some of the changes so far include:
 - Extensive documentation with DocC & reformatted source code (**In progress**)
 - Timestamp `Double` -> `Int` auto conversion that integrates nicely with any existing usages out of the box.
 - uhhh more stuff in progress
+- TODO: build DocC documentation and put it on gh pages or smth
+- TODO: github swift packages and Actions integration
+- TODO: more code improvements and convenience features
 
 > [!TIP]
 > Open an issue or PR if you have any suggestions/contributions/bugs.
@@ -134,6 +137,3 @@ extension ViewController: SwordRPCDelegate {
   ) {}
 }
 ```
-
-## Links
-Join the [API Channel](https://discord.gg/99a3xNk) to ask questions!
