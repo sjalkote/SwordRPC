@@ -11,6 +11,10 @@ Some of the changes so far include:
 - Source updated for Swift 5.0 or higher, support for Swift Package Manager, and updated the Socket dependency.
 - Extensive documentation with DocC & reformatted source code (**In progress**)
 - Timestamp `Double` -> `Int` auto conversion that integrates nicely with any existing usages out of the box.
+- Return `Result<Void,SwordRPCError>` in `connect()` to provide explicit `.failure` reasons for additional context (e.g. Discord not detected).
+- Make `JoinRequest` properties public so that callers can display information about the users who request to join the activity.
+- Fix encoding by using Optionals to skip nil rich presence values instead of sending an empty string.
+- Add support for rich presence Buttons.
 - uhhh more stuff in progress
 - TODO: build DocC documentation and put it on gh pages or smth
 - TODO: github swift packages and Actions integration

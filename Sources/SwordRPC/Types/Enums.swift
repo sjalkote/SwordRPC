@@ -22,8 +22,23 @@ enum Event: String {
     case spectate = "ACTIVITY_SPECTATE"
 }
 
-public enum JoinReply: Int {
-    case no
-    case yes
-    case ignore
+public enum JoinReply: Int, Codable {
+    case no = 0
+    case yes = 1
+    case ignore = 2
+}
+
+/// See also: https://discord.com/developers/docs/developer-tools/game-sdk#activitytype-enum
+public enum ActivityType: Int, Codable {
+    case playing = 0
+    case streaming = 1
+    case listening = 2
+    case watching = 3
+    case custom = 4
+    case competing = 5
+}
+
+public enum SwordRPCError: Error {
+    case discordNotDetected
+    case socketUnavailable
 }

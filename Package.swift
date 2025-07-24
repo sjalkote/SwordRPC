@@ -9,7 +9,7 @@ let package = Package(
     .library(name: "SwordRPC", targets: ["SwordRPC"])
   ],
   dependencies: [
-    .package(url: "https://github.com/Kitura/BlueSocket.git", from: "2.0.2")
+    .package(url: "https://github.com/Kitura/BlueSocket.git", from: "2.0.4")
   ],
   targets: [
     .target(

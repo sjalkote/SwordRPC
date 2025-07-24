@@ -9,13 +9,16 @@
 import Foundation
 
 public struct RichPresence: Encodable {
-    public var assets = Assets()
-    public var details = ""
-    public var instance = true
-    public var party = Party()
-    public var secrets = Secrets()
-    public var state = ""
-    public var timestamps = Timestamps()
+    public var assets: Assets = Assets()
+    public var details: String?
+    public var instance: Bool = true
+    public var party: Party?
+    public var secrets: Secrets = Secrets()
+    public var state: String?
+    public var timestamps: Timestamps = Timestamps()
+    public var type: ActivityType? = .playing
+    /// Discord supports a maximum of 2 buttons in the rich presence.
+    public var buttons: [Button]?
 
     public init() {}
 }
@@ -52,6 +55,12 @@ extension RichPresence {
             case smallImage = "small_image"
             case smallText = "small_text"
         }
+    }
+    
+    public struct Button: Encodable {
+        public var label: String
+        public var url: String
+        public init(label: String, url: String) {self.label = label; self.url = url}
     }
 
     public struct Party: Encodable {

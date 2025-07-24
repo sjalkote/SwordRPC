@@ -56,13 +56,13 @@ public class SwordRPC {
         
         self.registerUrl()
     }
-    
-    public func connect() {
+
+    public func connect() -> Result<Void, SwordRPCError> {
         let tmp = NSTemporaryDirectory()
         
         guard let socket = self.socket else {
             print("[SwordRPC] Unable to connect")
-            return
+            return .failure(.socketUnavailable)
         }
         
         for i in 0 ..< 10 {
@@ -76,11 +76,13 @@ public class SwordRPC {
                 self.subscribe("ACTIVITY_SPECTATE")
                 self.subscribe("ACTIVITY_JOIN_REQUEST")
                 
-                return
+                print("[SwordRPC] Connected to Discord after \(i+1) attempts")
+                return .success(Void())
             }
         }
         
         print("[SwordRPC] Discord not detected")
+        return .failure(.discordNotDetected)
     }
     
     public func disconnect() {
@@ -89,7 +91,6 @@ public class SwordRPC {
             self.delegate?.swordRPCDidDisconnect(self, code: 0, message: nil)
         } else {
             print("[SwordRPC] Already disconnected")
-            return
         }
     }
     

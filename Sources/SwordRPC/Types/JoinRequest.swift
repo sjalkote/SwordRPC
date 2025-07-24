@@ -7,10 +7,10 @@
 //
 
 public struct JoinRequest: Decodable {
-    let avatar: String
-    let discriminator: String
-    let userId: String
-    let username: String
+    public let avatar: String
+    public let discriminator: String
+    public let userId: String
+    public let username: String
 
     enum CodingKeys: String, CodingKey {
         case avatar
