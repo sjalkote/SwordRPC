@@ -9,12 +9,15 @@ The code has been heavily documented and the package has been updated with new f
 Some of the changes so far include:
 
 - Source updated for Swift 5.0 or higher, support for Swift Package Manager, and updated the Socket dependency.
-- Extensive documentation with DocC & reformatted source code (**In progress**)
+- **Extensive** documentation with DocC & reformatted source code (**In progress**)
 - Timestamp `Double` -> `Int` auto conversion that integrates nicely with any existing usages out of the box.
 - Return `Result<Void,SwordRPCError>` in `connect()` to provide explicit `.failure` reasons for additional context (e.g. Discord not detected).
 - Make `JoinRequest` properties public so that callers can display information about the users who request to join the activity.
 - Fix encoding by using Optionals to skip nil rich presence values instead of sending an empty string.
-- Add support for rich presence Buttons.
+- Upgraded platform req to macOS `v10_15`
+    - Removes usages of `DispatchQueue` in favor of Swift Concurrency's `Task` queues.
+- Other random things like favoring strict types such as `TimeInterval` over `Int`
+- ~~Add support for rich presence Buttons.~~ **NOT WORKING YET**
 - uhhh more stuff in progress
 - TODO: build DocC documentation and put it on gh pages or smth
 - TODO: github swift packages and Actions integration
@@ -41,7 +44,7 @@ Some of the changes so far include:
 import SwordRPC
 
 /// Additional arguments:
-/// handlerInterval: Int = 1000 (decides how fast to check discord for updates, 1000ms = 1s)
+/// handlerInterval: TimeInterval = 1 (decides how fast to check discord for updates, if needed use floats like 0.5 for 500ms)
 /// autoRegister: Bool = true (automatically registers your application to discord's url scheme (discord-appid://))
 /// steamId: String? = nil (this is for steam games on these platforms)
 let rpc = SwordRPC(appId: "123")

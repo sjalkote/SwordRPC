@@ -9,7 +9,7 @@
 import Foundation
 import Socket
 
-extension SwordRPC {
+extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sendable, we take responsibility for preventing race conditions and ensuring thread safety.
 
     func createSocket() {
         do {
@@ -49,9 +49,9 @@ extension SwordRPC {
     }
 
     func receive() {
-        self.worker.asyncAfter(
-            deadline: .now() + .milliseconds(self.handlerInterval)
-        ) { [unowned self] in
+        Task { [weak self] in
+            guard let self = self else { print("[SwordRPC] Failed to unwrap self in receive()"); return; }
+            try? await Task.sleep(nanoseconds: UInt64(self.handlerInterval) * 1_000_000)
             guard let isConnected = self.socket?.isConnected, isConnected else {
                 self.disconnectHandler?(self, nil, nil)
                 self.delegate?
@@ -172,9 +172,7 @@ extension SwordRPC {
     }
 
     func handleEvent(_ data: [String: Any]) {
-        guard let evt = data["evt"] as? String,
-            let event = Event(rawValue: evt)
-        else {
+        guard let evt = data["evt"] as? String, let event = Event(rawValue: evt) else {
             return
         }
 
@@ -221,18 +219,16 @@ extension SwordRPC {
     }
 
     func updatePresence(afterDelay: TimeInterval = 5) {
-        self.worker
-            .asyncAfter(deadline: .now() + afterDelay) {
-                [unowned self] in
-                self.updatePresence()
+        Task { [weak self] in
+            guard let self = self else { return }
+            try? await Task.sleep(nanoseconds: UInt64(afterDelay * 1_000_000_000))
+            self.updatePresence()
 
-                guard let presence = self.presence else {
-                    return
-                }
+            guard let presence = self.presence else {
+                return
+            }
 
-                self.presence = nil
-
-                let json = """
+            let json = """
                     {
                       "cmd": "SET_ACTIVITY",
                       "args": {
@@ -243,8 +239,9 @@ extension SwordRPC {
                     }
                     """
 
-                try? self.send(json, .frame)
-            }
+            try? self.send(json, .frame)
+            self.presence = nil
+        }
     }
 
 }

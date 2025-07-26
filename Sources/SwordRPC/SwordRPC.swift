@@ -13,14 +13,13 @@ public class SwordRPC {
     
     // MARK: App Info
     public let appId: String
-    public var handlerInterval: Int
+    public var handlerInterval: TimeInterval
     public let autoRegister: Bool
     public let steamId: String?
     
     // MARK: Technical stuff
     let pid: Int32
     var socket: Socket? = nil
-    let worker: DispatchQueue
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     var presence: RichPresence? = nil
@@ -36,7 +35,7 @@ public class SwordRPC {
     
     public init(
         appId: String,
-        handlerInterval: Int = 1000,
+        handlerInterval: TimeInterval = 1,
         autoRegister: Bool = true,
         steamId: String? = nil
     ) {
@@ -46,10 +45,6 @@ public class SwordRPC {
         self.steamId = steamId
         
         self.pid = ProcessInfo.processInfo.processIdentifier
-        self.worker = DispatchQueue(
-            label: "me.azoy.swordrpc.\(pid)",
-            qos: .userInitiated
-        )
         self.encoder.dateEncodingStrategy = .secondsSince1970
         
         self.createSocket()
