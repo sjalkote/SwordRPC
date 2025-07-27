@@ -21,7 +21,6 @@ extension SwordRPC: @unchecked Sendable {
             try self.socket?.setBlocking(mode: false)
         } catch {
             guard let error = error as? Socket.Error else {
-                print("[SwordRPC] Unable to create rpc socket")
                 return
             }
 
