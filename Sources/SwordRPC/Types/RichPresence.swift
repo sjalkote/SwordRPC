@@ -8,7 +8,8 @@
 
 import Foundation
 
-/// Represents the [Discord Activity object](https://discord.com/developers/docs/events/gateway-events#activity-object).
+/// Represents the [Discord Activity object](https://discord.com/developers/docs/events/gateway-events#activity-object)
+/// containing all the information for the rich presence.
 ///
 /// Use this struct to configure rich presence features such as images, party information, and interactive buttons.
 /// Each property maps to a field in the Discord Activity API, allowing for detailed customization of the user's presence.
