@@ -167,6 +167,9 @@ extension SwordRPC: @unchecked Sendable {
     ///   - op: The operation code of the payload.
     ///   - json: The payload data as JSON.
     func handlePayload(_ op: OP, _ json: Data) {
+//        if let json = try? JSONSerialization.jsonObject(with: json) {
+//            print("SwordRPC received payload: \(json)")
+//        }
         // TODO: debug log responses
         switch op {
         case .close:

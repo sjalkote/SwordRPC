@@ -100,6 +100,12 @@ extension RichPresence {
             // Discord API expects an Int, so we round to avoid passing a Double
             set { _end = newValue.map { Date(timeIntervalSince1970: $0.timeIntervalSince1970.rounded()) } }
         }
+        
+        /// Need to encode timestamp names from `_start` to `start`
+        enum CodingKeys: String, CodingKey {
+            case _start = "start"
+            case _end = "end"
+        }
     }
 
     /// Represents the [Assets](https://discord.com/developers/docs/events/gateway-events#activity-object-activity-assets) object.

@@ -41,11 +41,10 @@ import Foundation
         // check discord during this time, once the test is done the presence will be cleared.
         Thread.sleep(forTimeInterval: 15)
     }
-    
-    // TODO: need to work on this
-    @Test("does rich presence show playing/listening time bar") func doesRPCShowTimeBar() {
+
+    @Test("does rich presence show watching/listening time bar") func doesRPCShowTimeBar() {
         var presence = RichPresence()
-        presence.type = .streaming
+        presence.type = .watching
         presence.state = "Test (state)"
         presence.details = "Test (details)"
         presence.assets.largeImage = "xcode"
@@ -54,11 +53,6 @@ import Foundation
         presence.assets.smallText = "Swift"
         presence.timestamps.start = Date()
         presence.timestamps.end = Date().advanced(by: 60)
-        // discord is kinda goofy and doesn't let you see buttons on your own profile :(
-        presence.buttons = [
-            RichPresence.Button(label: "Test 1", url: "xcode://"),
-            RichPresence.Button(label: "Test 2", url: "https://swift.org")
-        ]
         rpc.setPresence(presence)
         // check discord during this time, once the test is done the presence will be cleared.
         Thread.sleep(forTimeInterval: 15)

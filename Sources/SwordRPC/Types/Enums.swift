@@ -53,16 +53,10 @@ public enum JoinReply: Int, Codable {
 public enum ActivityType: Int, Codable {
     /// Playing {name}
     case playing = 0
-    /// Streaming {details}
-    case streaming = 1
     /// Listening to {name}
     case listening = 2
     /// Watching {name}
     case watching = 3
-    /// {emoji} {state}
-    ///
-    /// Similar to just setting a custom status in Discord.
-    case custom = 4
     /// Competing in {name}
     case competing = 5
 }
