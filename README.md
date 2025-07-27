@@ -22,9 +22,6 @@ Some of the changes so far include:
 - Other random things like `Secrets?` nil to allow buttons, favoring strict types such as `TimeInterval` over `Int`, etc.
 - Added support for RPC Buttons (Discord only allows up to 2 buttons)
 - uhhh more stuff in progress
-- TODO: build DocC documentation and put it on gh pages or smth
-- TODO: github swift packages and Actions integration
-- TODO: more code improvements and convenience features
 
 > [!TIP]
 > Open an issue or PR if you have any suggestions/contributions/bugs.
