@@ -19,6 +19,7 @@ let package = Package(
     .target(
       name: "SwordRPC",
       dependencies: [.product(name: "Socket", package: "BlueSocket")]
-    )
+    ),
+    .testTarget(name: "SwordRPCTests", dependencies: ["SwordRPC"]),
   ]
 )
