@@ -19,7 +19,7 @@ Some of the changes so far include:
 - Fix encoding by using Optionals to skip nil rich presence values instead of sending an empty string.
 - Upgraded platform req to macOS `v10_15`
     - Removes usages of `DispatchQueue` in favor of Swift Concurrency's `Task` queues.
-- Other random things like favoring strict types such as `TimeInterval` over `Int`
+- Other random things like `Secrets?` nil to allow buttons, favoring strict types such as `TimeInterval` over `Int`, etc.
 - Added support for RPC Buttons (Discord only allows up to 2 buttons)
 - uhhh more stuff in progress
 - TODO: build DocC documentation and put it on gh pages or smth
