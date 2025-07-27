@@ -1,10 +1,13 @@
 # SwordRPC - A Discord RPC library for Swift
 
-[![Swift Version](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat-square)](https://swift.org)
+[![Swift Version](https://img.shields.io/badge/Swift-5.3-orange.svg?style=flat-square)](https://swift.org)
 [![Tag](https://img.shields.io/github/tag/sjalkote/SwordRPC.svg?style=flat-square&label=release)](https://github.com/sjalkote/SwordRPC/releases)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/sjalkote/SwordRPC/swift.yml?style=flat-square)
 
 This fork provides a more up-to-date and maintained version of the SwordRPC library, which allows you to **integrate Discord Rich Presence into your Swift apps**.
 The code has been heavily documented and the package has been updated with new features and fixes, hopefully making it somewhat more enjoyable to use.
+
+I've also added detailed [**documentation here**](https://sjalkote.github.io/SwordRPC/documentation/swordrpc/).
 
 Some of the changes so far include:
 
