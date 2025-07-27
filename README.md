@@ -1,18 +1,18 @@
 # SwordRPC - A Discord RPC library for Swift
 
-[![Swift Version](https://img.shields.io/badge/Swift-5.3-orange.svg?style=flat-square)](https://swift.org)
+[![Swift Version](https://img.shields.io/badge/Swift-5.3+-orange.svg?style=flat-square)](https://swift.org)
 [![Tag](https://img.shields.io/github/tag/sjalkote/SwordRPC.svg?style=flat-square&label=release)](https://github.com/sjalkote/SwordRPC/releases)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/sjalkote/SwordRPC/swift.yml?style=flat-square)
 
 This fork provides a more up-to-date and maintained version of the SwordRPC library, which allows you to **integrate Discord Rich Presence into your Swift apps**.
 The code has been heavily documented and the package has been updated with new features and fixes, hopefully making it somewhat more enjoyable to use.
 
-I've also added detailed [**documentation here**](https://sjalkote.github.io/SwordRPC/documentation/swordrpc/).
+View the complete [**documentation here**](https://sjalkote.github.io/SwordRPC/documentation/swordrpc/).
 
 Some of the changes so far include:
 
 - Source updated for Swift 5.0 or higher, support for Swift Package Manager, and updated the Socket dependency.
-- **Extensive** documentation with DocC & reformatted source code (**In progress**)
+- **Extensive** documentation with DocC & reformatted source code
 - Timestamp `Double` -> `Int` auto conversion that integrates nicely with any existing usages out of the box.
 - Return `Result<Void,SwordRPCError>` in `connect()` to provide explicit `.failure` reasons for additional context (e.g. Discord not detected).
 - Make `JoinRequest` properties public so that callers can display information about the users who request to join the activity.
@@ -21,7 +21,7 @@ Some of the changes so far include:
     - Removes usages of `DispatchQueue` in favor of Swift Concurrency's `Task` queues.
 - Other random things like `Secrets?` nil to allow buttons, favoring strict types such as `TimeInterval` over `Int`, etc.
 - Added support for RPC Buttons (Discord only allows up to 2 buttons)
-- uhhh more stuff in progress
+- uhhh a bunch of other stuff I'm too lazy to name, just view the source diff
 
 > [!TIP]
 > Open an issue or PR if you have any suggestions/contributions/bugs.

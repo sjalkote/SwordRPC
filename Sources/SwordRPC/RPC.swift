@@ -9,8 +9,12 @@
 import Foundation
 import Socket
 
-extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sendable, we take responsibility for preventing race conditions and ensuring thread safety.
+/// Handles communication with the Discord RPC socket.
+///
+/// By marking this as @unchecked Sendable, we take responsibility for preventing race conditions and ensuring thread safety.
+extension SwordRPC: @unchecked Sendable {
 
+    /// Creates a new socket for RPC communication.
     func createSocket() {
         do {
             self.socket = try Socket.create(family: .unix, proto: .unix)
@@ -25,6 +29,11 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         }
     }
 
+    /// Sends a message with the specified operation code to the Discord RPC socket.
+    /// - Parameters:
+    ///   - msg: The JSON string message to send.
+    ///   - op: The operation code to use.
+    /// - Throws: An error if the socket write fails.
     func send(_ msg: String, _ op: OP) throws {
         let payload = msg.data(using: .utf8)!
 
@@ -48,6 +57,8 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         try self.socket?.write(from: buffer.baseAddress!, bufSize: buffer.count)
     }
 
+    /// Starts receiving messages from the Discord RPC socket asynchronously.
+    /// Handles incoming payloads and dispatches them to the appropriate handler.
     func receive() {
         Task { [weak self] in
             guard let self = self else { print("[SwordRPC] Failed to unwrap self in receive()"); return; }
@@ -55,7 +66,7 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
             guard let isConnected = self.socket?.isConnected, isConnected else {
                 self.disconnectHandler?(self, nil, nil)
                 self.delegate?
-                    .swordRPCDidDisconnect(self, code: nil, message: nil)
+                    .rpcDidDisconnect(self, code: nil, message: nil)
                 return
             }
 
@@ -121,6 +132,7 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         }
     }
 
+    /// Performs the initial handshake with Discord using the client ID.
     func handshake() {
         do {
             let json = """
@@ -137,6 +149,8 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         }
     }
 
+    /// Subscribes to a specific Discord event.
+    /// - Parameter event: The event name to subscribe to.
     func subscribe(_ event: String) {
         let json = """
             {
@@ -149,6 +163,10 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         try? self.send(json, .frame)
     }
 
+    /// Handles an incoming payload from Discord based on the operation code.
+    /// - Parameters:
+    ///   - op: The operation code of the payload.
+    ///   - json: The payload data as JSON.
     func handlePayload(_ op: OP, _ json: Data) {
         switch op {
         case .close:
@@ -158,7 +176,7 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
             self.socket?.close()
             self.disconnectHandler?(self, code, message)
             self.delegate?
-                .swordRPCDidDisconnect(self, code: code, message: message)
+                .rpcDidDisconnect(self, code: code, message: message)
 
         case .ping:
             try? self.send(String(data: json, encoding: .utf8)!, .pong)
@@ -171,6 +189,8 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
         }
     }
 
+    /// Handles a specific Discord event and dispatches it to the appropriate handler or delegate method.
+    /// - Parameter data: The event data as a dictionary.
     func handleEvent(_ data: [String: Any]) {
         guard let evt = data["evt"] as? String, let event = Event(rawValue: evt) else {
             return
@@ -184,12 +204,12 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
             let message = data["message"] as! String
             self.errorHandler?(self, code, message)
             self.delegate?
-                .swordRPCDidReceiveError(self, code: code, message: message)
+                .rpcDidReceiveError(self, code: code, message: message)
 
         case .join:
             let secret = data["secret"] as! String
             self.joinGameHandler?(self, secret)
-            self.delegate?.swordRPCDidJoinGame(self, secret: secret)
+            self.delegate?.rpcDidJoinGame(self, secret: secret)
 
         case .joinRequest:
             let requestData = data["user"] as! [String: Any]
@@ -200,7 +220,7 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
             let secret = data["secret"] as! String
             self.joinRequestHandler?(self, joinRequest, secret)
             self.delegate?
-                .swordRPCDidReceiveJoinRequest(
+                .rpcDidReceiveJoinRequest(
                     self,
                     request: joinRequest,
                     secret: secret
@@ -208,16 +228,18 @@ extension SwordRPC: @unchecked Sendable {   // By marking this as @unchecked Sen
 
         case .ready:
             self.connectHandler?(self)
-            self.delegate?.swordRPCDidConnect(self)
+            self.delegate?.rpcDidConnect(self)
             self.updatePresence()
 
         case .spectate:
             let secret = data["secret"] as! String
             self.spectateGameHandler?(self, secret)
-            self.delegate?.swordRPCDidSpectateGame(self, secret: secret)
+            self.delegate?.rpcDidSpectateGame(self, secret: secret)
         }
     }
 
+    /// Updates the user's presence after an optional delay, using a `Task` and scheduling a regular update.
+    /// - Parameter afterDelay: The delay in seconds before updating presence. Default is **5 seconds**.
     func updatePresence(afterDelay: TimeInterval = 5) {
         Task { [weak self] in
             guard let self = self else { return }
